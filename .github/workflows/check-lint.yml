@@ -73,7 +73,7 @@ jobs:
 
       - name: iPhone 11 Test
         run: |
-          xcodebuild test -scheme affirm-me-test -workspace affirm-me.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 11,OS=13.3'
+          xcodebuild test -scheme app-test -workspace app.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 11,OS=13.3'
 
       #- uses: actions/setup-ruby@v1
         #with:
