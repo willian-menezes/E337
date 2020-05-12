@@ -1,4 +1,4 @@
-name: Check Eslint
+name: CI
 
 on: 
   pull_request:
@@ -9,15 +9,25 @@ jobs:
   build: 
     runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v2
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      #with: 
+          #fetch-depth: 0
 
-      - name: Install Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: 10.17.0
-      - name: Innstall Dependencies
-        run: yarn
-      
-      - name: Test Jest
-        run: yarn test --coverage
+    - name: Set Up Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: 10.17.0
+
+    - name: Innstall dependencies
+      run: yarn
+
+    - name: Check linting
+      run: yarn lint --fix
+    
+    - name: Check tests
+      run: yarn test --coverage
+
+    #- name: Check commit message
+      #uses: wagoid/commitlint-github-action@v1
