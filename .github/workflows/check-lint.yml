@@ -40,9 +40,42 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 10.17.0
       - name: Install dependencies
         run: |
           yarn
       - name: Build Android Release
         run: |
           cd android && ./gradlew assembleRelease
+
+  build-ios:
+    needs: install-and-test
+    runs-on: macOS-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 10.17.0
+      
+      - name: Install dependencies
+        run: |
+          yarn
+      
+      - name: CocoaPod Install
+          run: cd ios && pod install
+
+      - name: Force xcode 11
+          run: sudo xcode-select -switch /Applications/Xcode_11.3.app
+          
+      - name: iPhone 11 Test
+          run: xcodebuild test -scheme affirm-me-test -workspace affirm-me.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 11,OS=13.3'
+
+      #- uses: actions/setup-ruby@v1
+        #with:
+          #ruby-version: '2.x'
+      #- name: Install Fastlane
+      #  run: bundle install
+      #- name: Install packages
+      #  run: yarn install
