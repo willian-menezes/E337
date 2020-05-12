@@ -16,7 +16,8 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 10.17.0
-      - run: yarn
-      - run: yarn test
-      - env:
-          CI: true
+      - name: Innstall Dependencies
+        run: yarn
+      
+      - name: Test Jest
+        run: yarn test --coverage
