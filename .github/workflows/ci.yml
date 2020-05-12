@@ -30,17 +30,17 @@ jobs:
           key: ${{ runner.OS }}-yarn-${{ hashFiles('**/yarn.lock') }}
           #restore-keys: ${{ runner.os }}-yarn-
 
-      - name: Install dependencies
+      - name: Install dependencies 
         if: steps.cache.outputs.cache-hit != 'true'
         run: yarn
 
-      - name: Check linting 🔎
+      - name: Check linting 🧐
         run: yarn lint --fix
       
-      - name: Check tests 🧪
+      - name: Check tests 😎
         run: yarn test --coverage
 
-      - name: Check commit message 🧪
+      - name: Check commit message 🤓
         uses: wagoid/commitlint-github-action@v1
 
   build-android:
@@ -52,7 +52,7 @@ jobs:
         with:
           node-version: 10.17.0
 
-      - name: Cache NPM dependencies
+      - name: Cache dependencies
         uses: actions/cache@v1
         with:
           path: node_modules
@@ -63,7 +63,7 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: yarn
 
-      - name: Build Android Release
+      - name: Build Android Release 🙌
         run: |
           cd android && ./gradlew assembleRelease
 
@@ -76,7 +76,7 @@ jobs:
         with:
           node-version: 10.17.0
       
-      - name: Cache NPM dependencies
+      - name: Cache dependencies
         uses: actions/cache@v1
         with:
           path: node_modules
@@ -87,14 +87,14 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
         run: yarn
 
-      - name: Cache Pods dependencies
+      - name: Cache pods dependencies
         uses: actions/cache@v1
         with:
           path: ios/Pods
           key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
           #restore-keys: ${{ runner.os }}-pods- 
       
-      - name: CocoaPod Install
+      - name: Pod Install
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
           cd ios && pod install
@@ -103,6 +103,6 @@ jobs:
         run: |
           sudo xcode-select -switch /Applications/Xcode_11.3.app
 
-      - name: iPhone 11 Test
+      - name: Build IOS 🙌
         run: |
           cd ios && xcodebuild -workspace E337.xcworkspace -scheme E337 -destination "generic/platform=iOS" -configuration Release build CODE_SIGNING_ALLOWED=NO
