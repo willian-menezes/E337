@@ -73,7 +73,7 @@ jobs:
 
       - name: iPhone 11 Test
         run: |
-          cd ios && xcodebuild -project -workspace E337.xcworkspace -scheme E337 -destination "generic/platform=iOS" -configuration Release build CODE_SIGNING_ALLOWED=NO
+          cd ios && xcodebuild -workspace E337.xcworkspace -scheme E337 -destination "generic/platform=iOS" -configuration Release build CODE_SIGNING_ALLOWED=NO
 
       #- uses: actions/setup-ruby@v1
         #with:
