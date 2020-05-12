@@ -51,7 +51,7 @@ jobs:
           cd android && ./gradlew assembleRelease
 
   build-ios:
-    #needs: install-and-test
+    needs: install-and-test
     runs-on: macOS-latest
     steps:
       - uses: actions/checkout@v2
@@ -73,7 +73,7 @@ jobs:
 
       - name: iPhone 11 Test
         run: |
-          cd ios && xcodebuild test -scheme app-test -workspace app.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 11,OS=13.3'
+          cd ios && xcodebuild test -scheme E337 -workspace E337.xcworkspace -destination 'platform=iOS Simulator,name=iPhone 11,OS=13.3'
 
       #- uses: actions/setup-ruby@v1
         #with:
