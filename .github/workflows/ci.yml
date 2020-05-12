@@ -23,7 +23,14 @@ jobs:
         with:
           node-version: 10.17.0
 
+      - name: Cache NPM dependencies
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-${{ hashFiles('**/yarn.lock') }}
+
       - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
         run: yarn
 
       - name: Check linting 🔎
@@ -43,15 +50,23 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 10.17.0
+
+      - name: Cache NPM dependencies
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-${{ hashFiles('**/yarn.lock') }}
+
       - name: Install dependencies
-        run: |
-          yarn
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: yarn
+
       - name: Build Android Release
         run: |
           cd android && ./gradlew assembleRelease
 
   build-ios:
-    #needs: install-and-test
+    needs: install-and-test
     runs-on: macOS-latest
     steps:
       - uses: actions/checkout@v2
@@ -59,9 +74,15 @@ jobs:
         with:
           node-version: 10.17.0
       
+      - name: Cache NPM dependencies
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-${{ hashFiles('**/yarn.lock') }}
+
       - name: Install dependencies
-        run: |
-          yarn
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: yarn
       
       - name: CocoaPod Install
         run: |
@@ -74,11 +95,3 @@ jobs:
       - name: iPhone 11 Test
         run: |
           cd ios && xcodebuild -workspace E337.xcworkspace -scheme E337 -destination "generic/platform=iOS" -configuration Release build CODE_SIGNING_ALLOWED=NO
-
-      #- uses: actions/setup-ruby@v1
-        #with:
-          #ruby-version: '2.x'
-      #- name: Install Fastlane
-      #  run: bundle install
-      #- name: Install packages
-      #  run: yarn install
