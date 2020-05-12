@@ -15,7 +15,7 @@ const Home: NavigationStackScreenComponent = ({navigation}) => {
       <Text>Home Screen</Text>
       <TouchableOpacity
         onPress={() => navigation.navigate(Routes.ORACOES_SCREEN)}>
-        <Text>Press Here!</Text>
+        <Text>Press Here</Text>
       </TouchableOpacity>
     </View>
   );
