@@ -9,14 +9,14 @@ import {
 
 let _navigator;
 
-const setNavigator = navigatorRef => (_navigator = navigatorRef);
+const setNavigator = (navigatorRef) => (_navigator = navigatorRef);
 
 const reset = (routeName: string, params: object = {}, index = 0) =>
   _navigator.dispatch(
     StackActions.reset({
       index,
       key: null,
-      actions: [NavigationActions.navigate({ routeName, params })],
+      actions: [NavigationActions.navigate({routeName, params})],
     }),
   );
 
@@ -51,7 +51,6 @@ export const getRouteFromState = (state: NavigationState): unknown => {
 export const getRouteName = <T extends NavigationProp<T>>(navigation) =>
   navigation ? navigation.state.routeName : _navigator.state.routeName;
 
-
 export default {
   reset,
   push,
@@ -62,5 +61,5 @@ export default {
   setNavigator,
   getParam,
   getRouteName,
-  getRouteFromState
+  getRouteFromState,
 };

@@ -1,13 +1,11 @@
-import {
-    NavigationRouteConfigMap,
-    NavigationSwitchProp,
-} from 'react-navigation';
-import { NavigationStackScreenComponent } from 'react-navigation-stack';
+import {NavigationRouteConfigMap, NavigationSwitchProp} from 'react-navigation';
+
+import {NavigationStackScreenComponent} from 'react-navigation-stack';
 
 export type ScreenWithNavigation<T> = NavigationStackScreenComponent<
-    Partial<T>
+  Partial<T>
 >;
 
 export type TCreateRoutesOptions = {
-    customRoutes?: NavigationRouteConfigMap<{}, NavigationSwitchProp>;
+  customRoutes?: NavigationRouteConfigMap<{}, NavigationSwitchProp>;
 };

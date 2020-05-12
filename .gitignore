@@ -1,3 +1,6 @@
+# Detox
+artifacts-e2e
+
 # OSX
 #
 .DS_Store
@@ -20,6 +23,8 @@ DerivedData
 *.hmap
 *.ipa
 *.xcuserstate
+project.xcworkspace
+ios/Pods
 
 # Android/IntelliJ
 #
@@ -28,10 +33,6 @@ build/
 .gradle
 local.properties
 *.iml
-
-# Visual Studio Code
-#
-.vscode/
 
 # node.js
 #
@@ -61,3 +62,6 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+
+# Coverage
+coverage/

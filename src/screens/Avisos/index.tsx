@@ -1,21 +1,18 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+
+import {View, Text} from 'react-native';
 
 import {
-  NavigationStackScreenProps,
+  //NavigationStackScreenProps,
   NavigationStackScreenComponent,
 } from 'react-navigation-stack';
 
-const Avisos: NavigationStackScreenComponent = ({ navigation }) => {
-
+const Avisos: NavigationStackScreenComponent = () => {
   return (
     <View>
-        <Text>
-            Avisos Screen
-        </Text>
+      <Text>Avisos Screen</Text>
     </View>
   );
-
 };
 
 export default Avisos;

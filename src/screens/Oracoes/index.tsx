@@ -1,21 +1,18 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+
+import {View, Text} from 'react-native';
 
 import {
-  NavigationStackScreenProps,
+  //NavigationStackScreenProps,
   NavigationStackScreenComponent,
 } from 'react-navigation-stack';
 
-const Oracoes: NavigationStackScreenComponent = ({ navigation }) => {
-
+const Oracoes: NavigationStackScreenComponent = () => {
   return (
     <View>
-        <Text>
-            Oracoes Screen
-        </Text>
+      <Text>Oracoes Screen</Text>
     </View>
   );
-
 };
 
 export default Oracoes;
