@@ -1,0 +1,112 @@
+name: CI
+
+on: 
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  install-and-test: 
+    runs-on: ubuntu-latest
+
+    env: 
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with: 
+            fetch-depth: 0
+
+      - name: Set Up Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 10.17.0
+
+      - name: Cache NPM dependencies
+        uses: actions/cache@v1
+        id: yarn-cache
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          #restore-keys: ${{ runner.os }}-yarn-
+
+      - name: Install dependencies 
+        if: steps.yarn-cache.outputs.cache-hit != 'true'
+        run: yarn
+
+      - name: Check linting 🧐
+        run: yarn lint --fix
+      
+      - name: Check tests 😎
+        run: yarn test --coverage
+
+      - name: Check commit message 🤓
+        uses: wagoid/commitlint-github-action@v1
+
+  build-android:
+    needs: install-and-test
+    runs-on: ubuntu-latest
+    steps: 
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 10.17.0
+
+      - name: Cache dependencies
+        uses: actions/cache@v1
+        id: yarn-cache
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          #restore-keys: ${{ runner.os }}-yarn-
+
+      - name: Install dependencies
+        if: steps.yarn-cache.outputs.cache-hit != 'true'
+        run: yarn
+
+      - name: Build Android Release 🙌
+        run: |
+          cd android && ./gradlew assembleRelease
+
+  build-ios:
+    needs: install-and-test
+    runs-on: macOS-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 10.17.0
+      
+      - name: Cache dependencies
+        uses: actions/cache@v1
+        id: yarn-cache
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          #restore-keys: ${{ runner.os }}-yarn-
+
+      - name: Install dependencies
+        if: steps.yarn-cache.outputs.cache-hit != 'true'
+        run: yarn
+
+      - name: Cache pods dependencies
+        uses: actions/cache@v1
+        id: pods-cache
+        with:
+          path: ios/Pods
+          key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
+          #restore-keys: ${{ runner.os }}-pods- 
+      
+      - name: Pod Install
+        if: steps.pods-cache.outputs.cache-hit != 'true'
+        run: |
+          cd ios && pod install
+
+      - name: Force xcode 11
+        run: |
+          sudo xcode-select -switch /Applications/Xcode_11.3.app
+
+      - name: Build IOS 🙌
+        run: |
+          cd ios && xcodebuild -workspace E337.xcworkspace -scheme E337 -destination "generic/platform=iOS" -configuration Release build CODE_SIGNING_ALLOWED=NO
