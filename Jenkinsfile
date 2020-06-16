@@ -26,7 +26,7 @@ pipeline {
         
         stage('Build Android Release 🙌') {
             agent {
-                docker "openjdk:8-jre"
+                docker "androidsdk/android-26"
             }
             steps {
                 sh "java -version"
