@@ -1,11 +1,5 @@
 pipeline {
-    agent { docker { image 'node:10.17' } }
     stages {
-        stage('Java ') {
-            steps {
-                sh 'java --version'
-            }
-        }
         stage('Install dependencies ') {
             steps {
                 sh 'yarn'
