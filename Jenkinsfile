@@ -26,7 +26,7 @@ pipeline {
         
         stage('Build Android Release 🙌') {
             agent {
-                docker "androidsdk/android-26"
+                docker "deredy/react-native"
             }
             steps {
                 sh "java -version"
