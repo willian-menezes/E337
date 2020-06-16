@@ -16,5 +16,10 @@ pipeline {
                 sh 'yarn test --coverage'
             }
         }
+        stage('Build Android Release 🙌') {
+            steps {
+                sh 'cd android && ./gradlew assembleRelease'
+            }
+        }
     }
 }
