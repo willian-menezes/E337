@@ -1,28 +1,25 @@
-node {
-    try {
-        stages {
-            stage('Install dependencies ') {
-                steps {
-                    sh 'yarn'
-                }
-            }
-            stage('Check linting 🧐') {
-                steps {
-                    sh 'yarn lint --fix'
-                }
-            }
-            stage('Check tests 😎') {
-                steps {
-                    sh 'yarn test --coverage'
-                }
-            }
-            stage('Build Android Release 🙌') {
-                steps {
-                    sh 'cd android && ./gradlew assembleRelease'
-                }
+pipeline {
+    agent any
+    stages {
+        stage('Install dependencies ') {
+            steps {
+                sh 'yarn'
             }
         }
-    } catch (e) {
-        throw e
+        stage('Check linting 🧐') {
+            steps {
+                sh 'yarn lint --fix'
+            }
+        }
+        stage('Check tests 😎') {
+            steps {
+                sh 'yarn test --coverage'
+            }
+        }
+        stage('Build Android Release 🙌') {
+            steps {
+                sh 'cd android && ./gradlew assembleRelease'
+            }
+        }
     }
 }
