@@ -1,25 +1,10 @@
-pipeline {
-    agent any
-    stages {
-        stage('Install dependencies ') {
-            steps {
-                sh 'yarn'
-            }
-        }
-        stage('Check linting 🧐') {
-            steps {
-                sh 'yarn lint --fix'
-            }
-        }
-        stage('Check tests 😎') {
-            steps {
-                sh 'yarn test --coverage'
-            }
-        }
-        stage('Build Android Release 🙌') {
-            steps {
-                sh 'cd android && ./gradlew assembleRelease'
-            }
-        }
+node {
+  try {
+    stage('React-Checkout/Prepare/Tests') {
+        sh "java --version"
     }
+
+  } catch(e) {
+      throw e
+  }
 }
