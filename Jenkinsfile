@@ -29,7 +29,7 @@ pipeline {
                 docker "openjdk:8-jre"
             }
             steps {
-                sh "java --version"
+                sh "java -version"
                 sh 'cd android && ./gradlew assembleRelease'
             }
         }
