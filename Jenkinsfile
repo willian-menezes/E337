@@ -26,7 +26,9 @@ pipeline {
         
         stage('Build Android Release 🙌') {
             agent {
-                docker "deredy/react-native"
+                dockerfile {
+                    filename 'Dockerfile.ci'
+                }
             }
             steps {
                 sh "cd android && ./gradlew wrapper --gradle-version 6.5"
