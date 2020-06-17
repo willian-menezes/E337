@@ -1,23 +1,13 @@
-def notifySlack(String fallback = '', String text = '', String color = '#ff0000') {
-    def attachments = [
-        [
-            text: ${text},
-            fallback: ${fallback},
-            color: ${color}
-        ]
-    ]
-
-    slackSend(channel: '#continuous_delivery_process', attachments: attachments)
-}
-
 node {
     try {
         stage('Install dependencies ') {
+            notifySlack()
+            
             checkout scm
 
             def result = sh (script: "git log -1", returnStatus: true)
 
-            notifySlack('TCApp is running on jenkins!', result)
+            //notifySlack('TCApp is running on jenkins!', result)
 
             sh 'yarn'
         }
@@ -29,10 +19,22 @@ node {
         }
         stage('Build Android Release 🙌') {
             sh 'cd android && ./gradlew assembleRelease'
-            notifySlack('Uhuuuuulll 🚀:tc:', 'All processes were successfully executed.')
+           // notifySlack('Uhuuuuulll 🚀:tc:', 'All processes were successfully executed.')
         }
     } catch (e) {
-        notifySlack('Ops, error!!!', e)
+        //notifySlack('Ops, error!!!', e)
         throw e
     }
+}
+
+def notifySlack() {
+    def attachments = [
+        [
+            text: 'I find your lack of faith disturbing!',
+            fallback: 'Hey, Vader seems to be mad at you.',
+            color: '#ff0000'
+        ]
+    ]
+
+    slackSend(channel: '#continuous_delivery_process', attachments: attachments)
 }
