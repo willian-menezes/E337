@@ -5,7 +5,7 @@ node {
 
             def result = sh (script: "git log -1", returnStatus: true)
 
-            notifySlack(result, 'Jenkins: Build proccess started on TCApp');
+            notifySlack('teste!', 'Jenkins: Build proccess started on TCApp');
 
             sh 'yarn'
         }
