@@ -5,7 +5,7 @@ node {
 
             def result = sh (script: "git log -1", returnStatus: true)
 
-            notifySlack('TCApp is running on jenkins!', result)
+            notifySlack(result)
 
             sh 'yarn'
         }
@@ -17,19 +17,19 @@ node {
         }
         stage('Build Android Release 🙌') {
             sh 'cd android && ./gradlew assembleRelease'
-            notifySlack('Uhuuuuulll 🚀:tc:', 'All processes were successfully executed.')
+            notifySlack('All processes were successfully executed.')
         }
     } catch (e) {
-        notifySlack('Ops, error!!!', e)
+        notifySlack(e)
         throw e
     }
 }
 
-def notifySlack(String fallback, String text) {
+def notifySlack(String text) {
     def attachments = [
         [
-            text: ${text},
-            fallback: ${fallback},
+            text: "${text}",
+            fallback: 'Teste Jenkins',
             color: '#ff0000'
         ]
     ]
