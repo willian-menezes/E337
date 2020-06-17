@@ -3,7 +3,7 @@
 set -e
 
 echo "<------YARN INSTALL------>"
-yarn install
+yarn
 
 echo "<------YARN TEST------>"
-yarn eslint . && yarn test:jest -- -u
+yarn lint --fix && yarn test
