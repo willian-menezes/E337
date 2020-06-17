@@ -1,7 +1,6 @@
 #!/bin/bash
 
 set -e
-source ~/.bash_profile
 
 echo "<------Android Export------>"
 #rm -rf "${1}/build/android/Wingman.apk"
