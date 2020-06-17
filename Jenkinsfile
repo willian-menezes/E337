@@ -5,7 +5,7 @@ node {
 
             def result = sh (script: "git log -1", returnStatus: true)
 
-            notifySlack('Apenas mais um teste!');
+            notifySlack(result, 'Jenkins: Build proccess started on TCApp');
 
             sh 'yarn'
         }
@@ -25,11 +25,11 @@ node {
     }
 }
 
-def notifySlack(String text = 'opa!') {
+def notifySlack(String text = 'opa!', String fallback = 'Jenkins tem novidades!',) {
     def attachments = [
         [
             text: "${text}",
-            fallback: 'Teste Jenkins',
+            fallback: "${fallback}",
             color: '#ff0000'
         ]
     ]
