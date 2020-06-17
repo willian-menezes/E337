@@ -1,6 +1,9 @@
 node {
   try {
     stages {
+        
+        checkout scm
+
         stage('Install dependencies ') {
             steps {
                 sh 'yarn'
