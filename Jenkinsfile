@@ -1,3 +1,15 @@
+def notifySlack(String fallback = '', String text = '', String color = '#ff0000') {
+    def attachments = [
+        [
+            text: ${text},
+            fallback: ${fallback},
+            color: ${color}
+        ]
+    ]
+
+    slackSend(channel: '#continuous_delivery_process', attachments: attachments)
+}
+
 node {
     try {
         stage('Install dependencies ') {
@@ -22,17 +34,5 @@ node {
     } catch (e) {
         notifySlack('Ops, error!!!', e)
         throw e
-    }
-
-    def notifySlack(String fallback = '', String text = '', String color = '#ff0000') {
-        def attachments = [
-            [
-                text: ${text},
-                fallback: ${fallback},
-                color: ${color}
-            ]
-        ]
-
-        slackSend(channel: '#continuous_delivery_process', attachments: attachments)
     }
 }
