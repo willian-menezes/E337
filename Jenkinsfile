@@ -29,8 +29,8 @@ pipeline {
                 docker "deredy/react-native"
             }
             steps {
-                sh "java -version"
-                sh 'cd android && ./gradlew assembleRelease'
+                sh "cd android && ./gradlew wrapper --gradle-version 6.5"
+                sh './gradlew assembleRelease'
             }
         }
     }
