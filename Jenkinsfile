@@ -3,6 +3,10 @@ node {
 
     checkout scm
 
+    def result = sh (script: "git log -1", returnStatus: true)
+
+    notifySlack('TCApp is running on jenkins!', result)
+
     stage('Install dependencies ') {
         sh 'yarn'
     }
@@ -14,9 +18,10 @@ node {
     }
     stage('Build Android Release 🙌') {
         sh 'cd android && ./gradlew assembleRelease'
+        notifySlack('Uhuuuuulll 🚀:tc:', 'All processes were successfully executed.')
     }
   } catch (e) {
-    //notifyBuild('FAILED')
+    notifySlack('Ops, error!!!', e)
     throw e
   }
 }
@@ -37,6 +42,18 @@ def detailsByStatus(String buildStatus = 'STARTED') {
   }
 
   return detail;
+}
+
+def notifySlack(String fallback = '', String text = '', String color = '#ff0000') {
+    def attachments = [
+        [
+            text: ${text},
+            fallback: ${fallback},
+            color: ${color}
+        ]
+    ]
+
+    slackSend(channel: '#continuous_delivery_process', attachments: attachments)
 }
 
 def notifyBuild(String buildStatus = 'STARTED') {
