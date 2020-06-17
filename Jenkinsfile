@@ -7,7 +7,7 @@ node {
       
       //def result = sh (script: "git log -1 | grep '\\[full build\\]'", returnStatus: true)
 
-      sh "./tools/cache_build.sh"
+      sh "cd tools && ./cache_build.sh && cd .."
 
     //   parallel(
     //     react_native: {
@@ -43,7 +43,7 @@ node {
         //     sh "${env.CI_STEPS}/android_export.sh ${env.ROOT}"
         //   }
         // )
-        sh "./tools/android_export.sh"
+        sh "cd tools && ./android_export.sh && cd .."
       }
 
     //   stage('Kobiton-Cloud-Tests') {
