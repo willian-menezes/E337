@@ -1,11 +1,7 @@
 node {
     try {
         stage('Install dependencies ') {
-            checkout scm
-
-            def result = sh (script: "git log -1", returnStatus: true)
-
-            notifySlack("${result}", 'Jenkins: Build proccess started on TCApp');
+            notifySlack("Build process started on the TCApp 🚀", 'Jenkins: Build process started on the TCApp 🚀');
 
             sh 'yarn'
         }
@@ -17,10 +13,11 @@ node {
         }
         stage('Build Android Release 🙌') {
             sh 'cd android && ./gradlew assembleRelease'
-            //notifySlack('All processes were successfully executed.')
+
+            notifySlack('All processes were successfully executed. 🙌', 'Jenkins: All processes were successfully executed. 🙌')
         }
     } catch (e) {
-        //notifySlack(e)
+        notifySlack("Error on the CI/CD process! 😢", "Jenkins: Error on the CI/CD process! 😢")
         throw e
     }
 }
