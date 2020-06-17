@@ -6,4 +6,4 @@ echo "<------YARN INSTALL------>"
 yarn
 
 echo "<------YARN TEST------>"
-yarn lint --fix && yarn test && cd ..
+yarn lint --fix && yarn test
