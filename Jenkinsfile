@@ -5,7 +5,7 @@ node {
 
             def result = sh (script: "git log -1", returnStatus: true)
 
-            notifySlack(result)
+            notifySlack()
 
             sh 'yarn'
         }
@@ -17,15 +17,15 @@ node {
         }
         stage('Build Android Release 🙌') {
             sh 'cd android && ./gradlew assembleRelease'
-            notifySlack('All processes were successfully executed.')
+            //notifySlack('All processes were successfully executed.')
         }
     } catch (e) {
-        notifySlack(e)
+        //notifySlack(e)
         throw e
     }
 }
 
-def notifySlack(String text) {
+def notifySlack(String text = 'opa!') {
     def attachments = [
         [
             text: "${text}",
