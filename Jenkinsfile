@@ -25,7 +25,7 @@ node {
     }
 }
 
-def notifySlack(String fallback = '', String text = '') {
+def notifySlack(String fallback, String text) {
     def attachments = [
         [
             text: ${text},
