@@ -1,79 +1,26 @@
 node {
   try {
-    stage('React-Checkout/Prepare/Tests') {
-      //notifyBuild('STARTED')
-
-      checkout scm
-      
-      //def result = sh (script: "git log -1 | grep '\\[full build\\]'", returnStatus: true)
-
-      sh "./steps/cache_build.sh"
-
-    //   parallel(
-    //     react_native: {
-    //       if (result != 0) {
-    //         sh "${env.CI_STEPS}/cache_build.sh"
-    //       } else {
-    //         sh "${env.CI_STEPS}/full_build.sh"
-    //       }
-
-    //       if (env.BRANCH_NAME == 'dev') {
-    //         sh "${env.CI_STEPS}/sonar.sh"
-    //       }
-    //     },
-    //     ios: {
-    //       if (env.BRANCH_NAME == 'release') {
-    //         if (result != 0) {
-    //           sh "${env.CI_STEPS}/ios_cache_build.sh"
-    //         } else {
-    //           sh "${env.CI_STEPS}/ios_full_build.sh"
-    //         }
-    //       }
-    //     }
-    //   )
-    }
-
-    //if (env.BRANCH_NAME == 'release') {
-      stage('Native-Clean/Archive/Export') {
-        // parallel(
-        //   ios: {
-        //     sh "${env.CI_STEPS}/ios_export.sh ${env.ROOT} ${env.WORKSPACE}"
-        //   },
-        //   android: {
-        //     sh "${env.CI_STEPS}/android_export.sh ${env.ROOT}"
-        //   }
-        // )
-        sh "cd android && ./gradlew assembleRelease";
-      }
-
-    //   stage('Kobiton-Cloud-Tests') {
-    //     withEnv(['PATH+NODE=/usr/local/bin']) {
-    //       def result = sh returnStatus: true, script: "node ${env.ROOT}/kobiton/index.js ios"
-    //       if (result != 0) {
-    //         notifyBuild('FAILED')
-    //       }
-    //       sh "exit ${result}"
-    //     }
-    //   }
-
-    //   stage('Deployment') {
-    //     parallel(
-    //       iTunesConnect: {
-    //         sh "${env.CI_STEPS}/testflight.sh ${env.ROOT}"
-    //       },
-    //       GoogleBeta: {
-    //         // TODO: need google paid account to use Pusblishing API
-    //       },
-    //       CodePushOTA: {
-    //         // TODO: need config for native iOS - Android to get update notification
-    //       }
-    //     )
-    //   }
-    //}
-
-    stage('Notify-Success-Release') {
-      //notifyBuild('SUCCESSFUL')
-      echo "Success!!"
+    stages {
+        stage('Install dependencies ') {
+            steps {
+                sh 'yarn'
+            }
+        }
+        stage('Check linting 🧐') {
+            steps {
+                sh 'yarn lint --fix'
+            }
+        }
+        stage('Check tests 😎') {
+            steps {
+                sh 'yarn test'
+            }
+        }
+        stage('Build Android Release 🙌') {
+            steps {
+                sh 'cd android && ./gradlew assembleRelease'
+            }
+        }
     }
   } catch (e) {
     //notifyBuild('FAILED')
