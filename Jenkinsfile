@@ -1,28 +1,26 @@
 node {
   try {
-    stages {
-        
-        checkout scm
+      
+    checkout scm
 
-        stage('Install dependencies ') {
-            steps {
-                sh 'yarn'
-            }
+    stage('Install dependencies ') {
+        steps {
+            sh 'yarn'
         }
-        stage('Check linting 🧐') {
-            steps {
-                sh 'yarn lint --fix'
-            }
+    }
+    stage('Check linting 🧐') {
+        steps {
+            sh 'yarn lint --fix'
         }
-        stage('Check tests 😎') {
-            steps {
-                sh 'yarn test'
-            }
+    }
+    stage('Check tests 😎') {
+        steps {
+            sh 'yarn test'
         }
-        stage('Build Android Release 🙌') {
-            steps {
-                sh 'cd android && ./gradlew assembleRelease'
-            }
+    }
+    stage('Build Android Release 🙌') {
+        steps {
+            sh 'cd android && ./gradlew assembleRelease'
         }
     }
   } catch (e) {
