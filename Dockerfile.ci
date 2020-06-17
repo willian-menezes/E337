@@ -94,7 +94,7 @@ RUN curl --silent https://dl.google.com/android/repository/tools_r$ANDROID_TOOLS
 # copy tools folder
 RUN chmod 777 /opt/tools
 COPY tools/android-accept-licenses.sh /opt/tools/android-accept-licenses.sh
-RUN chmod 777 /opt/tools
+RUN chmod 777 /opt/android
 ENV PATH ${PATH}:/opt/tools
 
 RUN mkdir -p $ANDROID_HOME/licenses/ \
