@@ -5,7 +5,7 @@ node {
 
             def result = sh (script: "git log -1", returnStatus: true)
 
-            notifySlack()
+            notifySlack('Apenas mais um teste!');
 
             sh 'yarn'
         }
