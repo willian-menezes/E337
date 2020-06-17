@@ -43,7 +43,7 @@ node {
         //     sh "${env.CI_STEPS}/android_export.sh ${env.ROOT}"
         //   }
         // )
-        sh "./tools/android_export.sh ${env.ROOT}"
+        sh "./tools/android_export.sh"
       }
 
     //   stage('Kobiton-Cloud-Tests') {
