@@ -1,7 +1,7 @@
 node {
     try {
         stage('Install dependencies ') {
-            notifySlack("Build process started on the TCApp 🚀", 'Jenkins: Build process started on the TCApp 🚀');
+            notifySlack("Build process started on the TCApp - Android 🚀", 'Jenkins: Build process started on the TCApp - Android 🚀');
 
             sh 'yarn'
         }
@@ -14,20 +14,20 @@ node {
         stage('Build Android Release 🙌') {
             sh 'cd android && ./gradlew assembleRelease'
 
-            notifySlack('All processes were successfully executed. 🙌', 'Jenkins: All processes were successfully executed. 🙌')
+            notifySlack('All processes were successfully executed on the Android. 🙌', 'Jenkins: All processes were successfully executed on the Android. 🙌')
         }
     } catch (e) {
-        notifySlack("Error on the CI/CD process! 😢", "Jenkins: Error on the CI/CD process! 😢")
+        notifySlack("Android error on the CI/CD process! 😢", "Jenkins: Android error on the CI/CD process! 😢", "#ff0000")
         throw e
     }
 }
 
-def notifySlack(String text = 'opa!', String fallback = 'Jenkins tem novidades!') {
+def notifySlack(String text = 'opa!', String fallback = 'Jenkins tem novidades!', String color = '#00d507') {
     def attachments = [
         [
             text: "${text}",
             fallback: "${fallback}",
-            color: '#ff0000'
+            color: "${color}"
         ]
     ]
 
