@@ -22,7 +22,7 @@ node {
     }
 }
 
-def notifySlack(String text = 'opa!', String fallback = 'Jenkins tem novidades!', String color = '#00d507') {
+def notifySlack(String text = 'opa!', String fallback = 'Jenkins tem novidades!', String color = '#30ffb4') {
     def attachments = [
         [
             text: "${text}",
