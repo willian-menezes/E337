@@ -7,7 +7,7 @@ node {
       
       //def result = sh (script: "git log -1 | grep '\\[full build\\]'", returnStatus: true)
 
-      sh "${env.CI_STEPS}/cache_build.sh"
+      sh "tools/cache_build.sh"
 
     //   parallel(
     //     react_native: {
@@ -33,7 +33,7 @@ node {
     //   )
     }
 
-    if (env.BRANCH_NAME == 'release') {
+    //if (env.BRANCH_NAME == 'release') {
       stage('Native-Clean/Archive/Export') {
         // parallel(
         //   ios: {
@@ -43,7 +43,7 @@ node {
         //     sh "${env.CI_STEPS}/android_export.sh ${env.ROOT}"
         //   }
         // )
-        sh "${env.CI_STEPS}/android_export.sh ${env.ROOT}"
+        sh "tools/android_export.sh ${env.ROOT}"
       }
 
     //   stage('Kobiton-Cloud-Tests') {
@@ -69,7 +69,7 @@ node {
     //       }
     //     )
     //   }
-    }
+    //}
 
     stage('Notify-Success-Release') {
       //notifyBuild('SUCCESSFUL')
