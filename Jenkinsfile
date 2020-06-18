@@ -3,7 +3,7 @@ node {
         stage('Install dependencies ') {
             notifySlack("Build process started on the TCApp - Android 🚀", 'Jenkins: Build process started on the TCApp - Android 🚀');
 
-            sh 'yarn'
+            sh 'yarn cache clean && yarn'
         }
         stage('Check linting 🧐') {
             sh 'yarn lint --fix'
