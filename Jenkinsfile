@@ -1,8 +1,8 @@
 node {
     try {
-        stage('Install dependencies ') {
+        stage('Install dependencies') {
             checkout scm
-            
+
             notifySlack("Build process started on the TCApp - Android 🚀", 'Jenkins: Build process started on the TCApp - Android 🚀');
 
             sh 'yarn'
